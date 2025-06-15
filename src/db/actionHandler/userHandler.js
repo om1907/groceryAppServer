@@ -1,12 +1,13 @@
+import { DB_CONSTANTS } from "../../utils/dbConstants.js";
 import { internalServer } from "../../utils/response.js";
 import User from "../models/user.model.js";
 
 const userHandler = async (event) => {
   console.log("Enter in User action handler", event);
   switch (event.actionType) {
-    case "getData":
+    case DB_CONSTANTS.ACTION_TYPES.GET_DATA:
       return getData(event.query);
-    case "saveData":
+    case DB_CONSTANTS.ACTION_TYPES.SAVE_DATA:
       return saveData(event.query);
     default:
       console.log("ActionType not found");

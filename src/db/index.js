@@ -1,3 +1,4 @@
+import { DB_CONSTANTS } from "../utils/dbConstants.js";
 import { internalServer } from "../utils/response.js";
 import { orderHandler } from "./actionHandler/orderHandler.js";
 import { productHandler } from "./actionHandler/productHandler.js";
@@ -30,11 +31,11 @@ const dbHandler = async (event) => {
 const processEvent = async (event) => {
   console.log("Enter in processEvent of DbHandler", event);
   switch (event.collectionName) {
-    case "Users":
+    case DB_CONSTANTS.COLLECTIONS.USER:
       return userHandler(event);
-    case "Products":
+    case DB_CONSTANTS.COLLECTIONS.PRODUCT:
       return productHandler(event);
-    case "Orders":
+    case DB_CONSTANTS.COLLECTIONS.ORDER:
       return orderHandler(event);
     default:
       console.log("CollectioinName not found");

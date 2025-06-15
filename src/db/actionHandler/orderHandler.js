@@ -1,13 +1,14 @@
+import { DB_CONSTANTS } from "../../utils/dbConstants.js";
 import { internalServer } from "../../utils/response.js";
 import User from "../models/user.model.js";
 
 const orderHandler = async (event) => {
   console.log("Enter in User action handler", event);
   switch (event.actionType) {
-    case "getData":
+    case DB_CONSTANTS.ACTION_TYPES.GET_DATA:
       getData(event.query);
       break;
-    case "saveData":
+    case DB_CONSTANTS.ACTION_TYPES.SAVE_DATA:
       saveData(event.query);
       break;
     default:
