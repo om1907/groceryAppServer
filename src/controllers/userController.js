@@ -1,21 +1,23 @@
 import { comparePassword, hashPassword } from "../utils/hashing/index.js";
 import { checkIfUserExists, createNewUser } from "../utils/helper.js";
-import { internalServerResponse, successResponse } from "../utils/response.js";
+import { info, error } from "../utils/logger.js";
+import { errorResponse, internalServerResponse, successResponse } from "../utils/response.js";
+import { globalUserObjectValidation, globalUserObjectValidationForLogin } from "../utils/validation.js";
 import { generateToken } from "../utils/token.js";
 
 export const userLoginController = async(event, res ) => {
     try {
-        const { email , password } = event.body;
-        if(!email || !password) {
-            return internalServerResponse(res, "Please enter valid email and password");
-        }
+        info({ message: "Enter in userLoginController", data: event.body });
 
-        const user = await checkIfUserExists(email);
+        event = event.body || event;
+        globalUserObjectValidationForLogin(event);
+
+        const user = await checkIfUserExists(event.email);
         if (user.status !== '200') {
             return internalServerResponse(res, "User not found");
         }
 
-        const isPasswordValid = await comparePassword(password, user?.data?.[0]?.password);
+        const isPasswordValid = await comparePassword(event.password, user?.data?.[0]?.password);
         if (!isPasswordValid) {
             return internalServerResponse(res, "Please enter valid email and password");
         }
@@ -23,32 +25,32 @@ export const userLoginController = async(event, res ) => {
         const token = generateToken(user?.data?.[0]?._id);
 
         return successResponse(res, "Login successful",{userData: user?.data?.[0], token});
-    } catch (error) {
-        console.error("Login error:", error);
-        res.status(500).json({ message: "Internal server error" });
+    } catch (err) {
+        error({ message: "Error in userLoginController", data: err });
+        throw errorResponse(res, err);
     }
 };
 
 export const userRegisterController = async(event, res) => {
     try {
-        const { name, email, password, role = 'User' } = event.body;
-        if(!email || !password || !name) {
-            return res.status(400).json({ message: "Missing required field"});
-        }
+        info({ message: "Enter in userRegisterController", data: event.body });
+
+        event = event.body || event;
+        globalUserObjectValidation(event);
         
-        const existingUser = await checkIfUserExists(email);
+        const existingUser = await checkIfUserExists(event.email);
         if (existingUser.status === '200') {
             return successResponse(res, "User already exists");
         }
 
-        const hashedPassword = await hashPassword(password);
-        event.body.password = hashedPassword;
+        const hashedPassword = await hashPassword(event.password);
+        event.password = hashedPassword;
 
-        const newUser = await createNewUser(event.body);
+        const newUser = await createNewUser(event);
 
         return successResponse(res, "User registered successfully", newUser);
     } catch (err) {
-        console.error("Error in user registration", err);
-        return internalServerResponse(res, "Internal server error", err);
+        error({ message: "Error in userRegisterController", data: err });
+        throw errorResponse(res, err);
     }
 };
