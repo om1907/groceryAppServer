@@ -11,7 +11,7 @@ export const checkIfUserExists = async (event) => {
       query: { email: event },
     };
     const user = await dbHandler(dbQueryToCheckUser);
-    return user.status === '200';
+    return user;
   } catch (error) {
     console.log("Error checking if user exists:", error);
     throw new Error("Error checking if user exists");
