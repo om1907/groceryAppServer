@@ -15,7 +15,11 @@ app.use(cors({origin: allowedOrigins, credentials: true}));
 app.use('/api/v1', userRoutes);
 
 app.get("/", (req, res) => {
-  res.send("Hello, World!");
+  res.status(200).json({
+    data: 'Inside app',
+    message: "Welcome to the KiranaStore.com",
+    statusCode: "[200]",
+  });
 });
 
 export default app;

@@ -4,8 +4,8 @@ import { userLoginController, userRegisterController } from '../controllers/user
 const router = express.Router();
 
 
-router.route('/users/login').post(userLoginController);
-router.route('/users/register').post(userRegisterController);
+router.route('/user/login').get(userLoginController);
+router.route('/user/register').post(userRegisterController);
 
 
 export default router;

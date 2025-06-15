@@ -1,18 +1,19 @@
-export const successResponse = (message, data) => {
+export const successResponse = (res, message, data) => {
   let response = { message, data, statusCode: "[200]" };
-  return {
-    errorMessage: JSON.stringify(response),
-  };
+  return res.status(200).json(response);
+};
+
+export const internalServerResponse = (res, message, data) => {
+  let response = { message, data, statusCode: "[500]" };
+  return res.status(200).json(response);
+};
+
+export const unAuthorized = (res, message, data) => {
+  let response = { message, data, statusCode: "[401]" };
+  return res.status(200).json(response);
 };
 
 export const internalServer = (message, data) => {
   let response = { message, data, statusCode: "[500]" };
-  return JSON.stringify(response);
-};
-
-export const unAuthorized = (message, data) => {
-  let response = { message, data, statusCode: "[401]" };
-  return {
-    errorMessage: JSON.stringify(response),
-  };
-};
+  return response;
+}

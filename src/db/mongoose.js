@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import chalk from "chalk";
 
-export const connectDB = async () => { 
+export const makeDbConnection = async () => { 
   try {
     await mongoose.connect(process.env.MONGO_URI);
     console.log(chalk.yellow("MongoDB connected successfully"));
