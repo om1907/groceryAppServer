@@ -7,7 +7,7 @@ export const userLoginController = async(event, res ) => {
     try {
         const { email , password } = event.body;
         if(!email || !password) {
-            return internalServerResponse(res, "Email & Password are required");
+            return internalServerResponse(res, "Please enter valid email and password");
         }
 
         const user = await checkIfUserExists(email);
@@ -17,7 +17,7 @@ export const userLoginController = async(event, res ) => {
 
         const isPasswordValid = await comparePassword(password, user?.data?.[0]?.password);
         if (!isPasswordValid) {
-            return internalServerResponse(res, "Invalid password");
+            return internalServerResponse(res, "Please enter valid email and password");
         }
 
         const token = generateToken(user?.data?.[0]?._id);

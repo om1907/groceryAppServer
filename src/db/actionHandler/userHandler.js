@@ -16,7 +16,7 @@ const userHandler = async (event) => {
 const getData = async (data) => {
   try {
     const result = await User.find(data);
-    console.log("Data fetched successfully:", result);
+
     if(result.length === 0) {
       return { status: "404", data: "No data found" };
     }
@@ -30,7 +30,6 @@ const getData = async (data) => {
 const saveData = async (data) => {
   try {
     const result = await User.create(data);
-    console.log("Data saved successfully:", result);
     return { status: "201", data: result };
   } catch (err) {
     console.log("Error in saveData of User action handler", err);

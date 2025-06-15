@@ -1,8 +1,8 @@
 import { internalServer } from "../../utils/response.js";
-import User from "../models/user.model.js";
+import { Product } from "../models/product.model.js";
 
 const productHandler = async (event) => {
-  console.log("Enter in User action handler", event);
+  console.log("Enter in Product action handler", event);
   switch (event.actionType) {
     case "getData":
       getData(event.query);
@@ -17,13 +17,26 @@ const productHandler = async (event) => {
 
 const getData = async (data) => {
   try {
-    const result = await User.find(data);
+    const result = await Product.find(data);
     console.log("Data fetched successfully:", result);
+    if(result.length === 0) {
+      return { status: "404", data: "No data found" };
+    }
     return { status: "200", data: result ? result : [] };
   } catch (err) {
-    console.log("Error in getData of User action handler", err);
-    throw internalServer("Error fetching data from User collection", err);
+    console.log("Error in getData of Product action handler", err);
+    throw internalServer("Error fetching data from Product collection", err);
   }
 };
+
+const saveData = async (data) => {
+  try {
+    const result = await Product.create(data);
+    return { status: "201", data: result };
+  } catch (err) {
+    console.log("Error in saveData of Product action handler", err);
+    throw internalServer("Error saving data to Product collection", err);
+  }
+}
 
 export { productHandler };

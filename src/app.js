@@ -2,6 +2,7 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import userRoutes from './routes/userRoutes.js';
+import productRoutes from './routes/productRoutes.js'
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.use(cookieParser());
 app.use(cors({origin: allowedOrigins, credentials: true}));
 
 app.use('/api/v1', userRoutes);
+app.use('/api/v1', productRoutes);
 
 app.get("/", (req, res) => {
   res.status(200).json({

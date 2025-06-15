@@ -7,7 +7,6 @@ dotenv.config();
 
 const PORT = process.env.PORT || 3098;
 
-
 const server = app.listen(PORT, () => {
   console.log(chalk.yellow(`Server is working on:  http://localhost:${PORT}`));
 });
