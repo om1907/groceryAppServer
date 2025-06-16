@@ -1,4 +1,4 @@
-import { DB_CONSTANTS } from "../../utils/dbConstants.js";
+import { DB_CONSTANTS } from "../../utils/constants.js";
 import { internalServer } from "../../utils/response.js";
 import User from "../models/user.model.js";
 

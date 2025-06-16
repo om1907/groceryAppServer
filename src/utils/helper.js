@@ -1,5 +1,5 @@
 import { dbHandler } from "../db/index.js";
-import { DB_CONSTANTS } from "./dbConstants.js";
+import { DB_CONSTANTS } from "./constants.js";
 
 export const checkIfUserExists = async (event) => {
   try {

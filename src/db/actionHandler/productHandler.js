@@ -1,4 +1,4 @@
-import { DB_CONSTANTS } from "../../utils/dbConstants.js";
+import { DB_CONSTANTS } from "../../utils/constants.js";
 import { internalServer } from "../../utils/response.js";
 import { Product } from "../models/product.model.js";
 
@@ -6,19 +6,17 @@ const productHandler = async (event) => {
   console.log("Enter in Product action handler", event);
   switch (event.actionType) {
     case DB_CONSTANTS.ACTION_TYPES.GET_DATA:
-      getData(event.query);
-      break;
+      return getData(event.query);
     case DB_CONSTANTS.ACTION_TYPES.SAVE_DATA:
-      saveData(event.query);
-      break;
+      return saveData(event.query);
     default:
       console.log("ActionType not found");
   }
 };
 
-const getData = async (data) => {
+const getData = async (query) => {
   try {
-    const result = await Product.find(data);
+    const result = await Product.find(query);
     console.log("Data fetched successfully:", result);
     if(result.length === 0) {
       return { status: "404", data: "No data found" };
