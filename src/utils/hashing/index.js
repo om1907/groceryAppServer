@@ -1,8 +1,7 @@
 import bcrypt from 'bcrypt';
-import { SALT } from '../constants.js';
 
 const hashPassword = async (password) =>{
-    const hashedPassword = await bcrypt.hash(password, SALT);
+    const hashedPassword = await bcrypt.hash(password, process.env.SALT);
     return hashedPassword;
 }
 

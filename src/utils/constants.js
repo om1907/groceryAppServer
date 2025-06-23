@@ -1,5 +1,3 @@
-const SALT = 10;
-
 const DB_CONSTANTS = {   
     COLLECTIONS: {
         USER: "Users",
