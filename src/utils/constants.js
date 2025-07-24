@@ -13,6 +13,5 @@ const DB_CONSTANTS = {
 };
 
 export {
-    SALT,
     DB_CONSTANTS,
 };
